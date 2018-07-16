@@ -15,17 +15,53 @@ using Newtonsoft.Json.Linq;
 public class TestScript : MonoBehaviour {
 
     // Auto implemented property initializer 4.x only!
-    // public int MyIntProperty { get; } = 5;
+    public string AutoPropertyInitializer { get; } = $"{nameof(AutoPropertyInitializer)} working!";
+
+    public string PlayerHealthUiText => $"Player Health: {Health}";
+
+    public int TestExpressionBodyReadyOnlyProperty => scores[0];
 
     private readonly int[] scores = { 80, 20, 45, 15, 38, 60 };
 
-	// Use this for initialization  
-	 void Start ()
+    event Action MyEvent;
+
+    public int Health { get; set; }
+
+
+    private void TestExpressionBodyFunction() => Debug.Log("Expression body function");
+    private void OnTriggerEnter(Collider other)
     {
+        if (other.attachedRigidbody != null)
+            other.attachedRigidbody.AddForce(Vector3.forward * 100);
+    }
+
+    // Use this for initialization  
+    void Start ()
+    {
+
+        var myRigidbody = GetComponent<Rigidbody>();
+
+       
+        myRigidbody?.AddForce(Vector3.forward * 100);
+
+
+        Debug.Log(String.Format("Player health: {0}", Health));
+        Debug.Log($"Player took damage, new player health: {TakeDamage(5)}");
+        Debug.Log($"Player healed, new player health: {Heal(5)}");
+
+        Debug.Log(AutoPropertyInitializer);
+        TestExpressionBodyFunction();
+        Debug.Log($"Expression body property accessor: {TestExpressionBodyReadyOnlyProperty}");
         Action<string> anonymousFunction = n => {
             string s = n + " World";
             Debug.Log(s);
         };
+        int? nullInt = 5;
+        Debug.Log($"{nullInt?.ToString()} Null int shouldn't print anything before this.");
+
+        MyEvent += () => Debug.Log("Testing events!"); 
+        MyEvent?.Invoke();
+        
 
         anonymousFunction("hello?");
 
@@ -69,7 +105,24 @@ public class TestScript : MonoBehaviour {
         UsingStaticDemo();
         gameObject.transform.Translate(10, 10, 10);
 
-        DoAsyncStuff();
+        // DoAsyncStuff();
+
+        ExceptionFilterTest();
+    }
+
+    private void ExceptionFilterTest()
+    {
+        bool testExceptionFilter = true;
+        try
+        {
+            
+            throw new Exception("Error!");
+        }
+        catch (Exception) when (testExceptionFilter)
+        {
+
+            Debug.Log("In filter");
+        }
     }
 
     private async void DoAsyncStuff()
@@ -136,6 +189,13 @@ public class TestScript : MonoBehaviour {
             Debug.Log("parms working " + item);
         }
     }
+
+    private int TakeDamage(int amount)
+    {
+        return Health -= amount;
+    }
+
+    private int Heal(int amount) => Health += amount;
 
     //private async Task MyTaskAsync()
     //{
