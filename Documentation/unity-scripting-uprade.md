@@ -103,3 +103,7 @@ if (PlayerRespawned != null)
 // .NET 4.x
 PlayerRespawned?.Invoke();
 ```
+
+## Task-based Asynchronous Pattern (TAP)
+
+Asynchronous programming allows time consuming operations to take place without blocking the rest of yo C# has language-level support for the Task-based Asynchronous Pattern (TAP) uses [System.Threading.Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) with the `async` and `await` syntax to 
