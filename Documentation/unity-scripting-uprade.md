@@ -104,6 +104,51 @@ if (PlayerRespawned != null)
 PlayerRespawned?.Invoke();
 ```
 
-## Task-based Asynchronous Pattern (TAP)
+### Task-based Asynchronous Pattern (TAP)
 
-Asynchronous programming allows time consuming operations to take place without blocking the rest of yo C# has language-level support for the Task-based Asynchronous Pattern (TAP) uses [System.Threading.Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) with the `async` and `await` syntax to 
+[Asynchronous programming](https://docs.microsoft.com/en-us/dotnet/csharp/async) allows time consuming operations to take place without causing your application to become unresponsive. This functionality also allows your code to wait for time consuming operations to finish before continuing with subsequent code that should not execute until the time consuming operation has finished. For example, you could wait for a file to load or a network operation to complete.
+
+In Unity, this is typically accomplished with [coroutines](https://docs.unity3d.com/Manual/Coroutines.html). However, since C# 5, the preferred method of asynchronous programming in .NET development has been the [Task-based Asynchronous Pattern (TAP)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) using the `async` and `await` keywords with [System.Threading.Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task).
+
+```csharp
+// Unity coroutine
+private void Start()
+{
+    StartCoroutine(WaitOneSecond());
+    DoMoreStuff(); // This executes without waiting for WaitOneSecond
+}
+private void IEnumerator WaitOneSecond()
+{
+    yield return new WaitForSeconds(1.0f);
+    Debug.Log("Finished waiting.")
+}
+```
+
+```csharp
+// .NET 4.x async-await
+private async void Start()
+{
+    Debug.Log("Wait.");
+    await WaitOneSecondAsync();
+    DoMoreStuff(); // Will not execute until WaitOneSecond has completed
+}
+private async Task WaitOneSecondAsync()
+{
+    await Task.Delay(TimeSpan.FromSeconds(1));
+    Debug.Log("Finished waiting.")
+}
+```
+
+TAP is a complex subject, with Unity-specific nuances developers should consider. As a result, TAP is not a universal replacement for coroutines in Unity; however, it is another tool to leverage. The scope of this feature is beyond this article, but some general best practices and tips are provided below:
+
+#### Getting started reference for TAP with Unity
+
+* Asynchronous functions that should be awaited should have the return type [`Task`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) or [`Task<TResult>`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1).
+* Asynchronous functions that return a task should have the suffix "Async" appended to their names.
+* The "Async" suffix on a function name indicates that it should always be awaited.
+* Only use the `async void` return type for functions that fire off async functions from non-async functions.
+
+* Coroutines cannot return values, but `Task<TResult>` can.
+* You cannot put a `yield` inside of a try-catch statement, making error handling difficult with coroutines. However, try-catch works with TAP.
+* `Task.Run` runs a task on the thread pool. This is useful for offloading expensive operations from the main thread to enhance performance, but can lead to numerous difficult to debug problems, such as race conditions.
+* The Unity API is not available outside of the main thread.
