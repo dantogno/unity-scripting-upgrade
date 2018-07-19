@@ -117,10 +117,10 @@ private void Start()
     StartCoroutine(WaitOneSecond());
     DoMoreStuff(); // This executes without waiting for WaitOneSecond
 }
-private void IEnumerator WaitOneSecond()
+private IEnumerator WaitOneSecond()
 {
     yield return new WaitForSeconds(1.0f);
-    Debug.Log("Finished waiting.")
+    Debug.Log("Finished waiting.");
 }
 ```
 
@@ -135,7 +135,7 @@ private async void Start()
 private async Task WaitOneSecondAsync()
 {
     await Task.Delay(TimeSpan.FromSeconds(1));
-    Debug.Log("Finished waiting.")
+    Debug.Log("Finished waiting.");
 }
 ```
 
@@ -143,12 +143,16 @@ TAP is a complex subject, with Unity-specific nuances developers should consider
 
 #### Getting started reference for TAP with Unity
 
-* Asynchronous functions that should be awaited should have the return type [`Task`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) or [`Task<TResult>`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1).
-* Asynchronous functions that return a task should have the suffix "Async" appended to their names.
-* The "Async" suffix on a function name indicates that it should always be awaited.
-* Only use the `async void` return type for functions that fire off async functions from non-async functions.
+* Asynchronous functions intended to be awaited should have the return type [`Task`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) or [`Task<TResult>`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1).
+* Asynchronous functions that return a task should have the suffix **"Async"** appended to their names. This helps indicate that they should always be awaited.
+* Only use the `async void` return type for functions that fire off async functions from traditional synchronous code. Such functions are not awaited and should not have the "Async" suffix in their names.
+* Unity uses the UnitySynchronizationContext to ensure async functions run on the main thread by default. The Unity API is not accessible outside of the main thread.
+* It is possible to run tasks on background threads with methods like [`Task.Run`](https://msdn.microsoft.com/library/hh195051.aspx) and [`Task.ConfigureAwait(false)`](https://msdn.microsoft.com/library/system.threading.tasks.task.configureawait.aspx). This is useful for offloading expensive operations from the main thread to enhance performance, but can lead to difficult to debug problems, and the Unity API is not accessible.
+
+#### Differences between coroutines and TAP
 
 * Coroutines cannot return values, but `Task<TResult>` can.
 * You cannot put a `yield` inside of a try-catch statement, making error handling difficult with coroutines. However, try-catch works with TAP.
-* `Task.Run` runs a task on the thread pool. This is useful for offloading expensive operations from the main thread to enhance performance, but can lead to numerous difficult to debug problems, such as race conditions.
-* The Unity API is not available outside of the main thread.
+* Unity's coroutine feature is not available in classes that don't derive from MonoBehaviour. TAP is great for asynchronous programming in such classes.
+* At this point, Unity does not suggest TAP as a wholesale replacement of coroutines, and profiling is the only way to know the specific results of one approach versus the other for any given project.
+

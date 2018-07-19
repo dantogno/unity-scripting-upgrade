@@ -138,12 +138,7 @@ public class TestScript : MonoBehaviour {
 
     }
 
-    class Pokemon
-    {
-        public string Name { get; set; }
-        //[JsonExtensionData]
-        //private IDictionary<string, JToken> additionalData;
-    }
+
 
 
 
@@ -225,7 +220,12 @@ public static class ExtensionTest
 
 public class Base { }
 public class Derived : Base { }
-
+public class Pokemon
+{
+    public string Name { get; set; }
+    //[JsonExtensionData]
+    //private IDictionary<string, JToken> additionalData;
+}
 // Primary constructory, doesn't work in 3.5 or 4.x
 //public class PriceBreak(int min)
 //    {
