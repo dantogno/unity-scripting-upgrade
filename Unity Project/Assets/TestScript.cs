@@ -39,10 +39,18 @@ public class TestScript : MonoBehaviour {
     void Start ()
     {
 
-        var myRigidbody = GetComponent<Rigidbody>();
+        dynamic d = 100;
 
-       
-        myRigidbody?.AddForce(Vector3.forward * 100);
+        if (d is int)
+            Debug.Log($"Value of d: {d}");
+        if (d is string)
+            Debug.Log($"Value of d: {d}");
+
+       // var myRigidbody = GetComponent<Rigidbody>();
+
+        //myRigidbody?.AddForce(Vector3.forward * 100);
+
+        MyEvent?.Invoke();
 
 
         Debug.Log(String.Format("Player health: {0}", Health));
@@ -127,9 +135,9 @@ public class TestScript : MonoBehaviour {
 
     private async void DoAsyncStuff()
     {
-        string result = await HttpClientTest();
-        Debug.Log(result);
-        TestAsyncStuff(result);
+        //string result = await HttpClientTest();
+        //Debug.Log(result);
+        //TestAsyncStuff(result);
     }
 
     private void TestAsyncStuff(string json)
@@ -142,13 +150,13 @@ public class TestScript : MonoBehaviour {
 
 
 
-    private async Task<string> HttpClientTest()
-    {
-        HttpClient Client = new HttpClient();
-        // Enter a pokedex number to find the pokemon with that ID <= 802
-       return await Client.GetStringAsync("http://pokeapi.co/api/v2/pokemon/35/");
+    //private async Task<string> HttpClientTest()
+    //{
+    //   // HttpClient Client = new HttpClient();
+    //   // // Enter a pokedex number to find the pokemon with that ID <= 802
+    //   //return await Client.GetStringAsync("http://pokeapi.co/api/v2/pokemon/35/");
         
-    }
+    //}
 
     private void UsingStaticDemo()
     {

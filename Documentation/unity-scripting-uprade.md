@@ -21,9 +21,19 @@ With the release of Unity 2017.1, Unity introduced an experimental version of it
 
 1. Open PlayerSettings in the Unity Inspector by selecting **Edit > Project Settings > Player**.
 
-1. Under the **Configuration** heading, click the **Scripting Runtime Version** dropdown and select **.NET 4.x Equivalent**.
+1. Under the **Configuration** heading, click the **Scripting Runtime Version** dropdown and select **.NET 4.x Equivalent**. You will be prompted to restart Unity.
 
 ![Select .NET 4.x equivalent](media/vstu_scripting-runtime-version.png)
+
+## Choosing between .NET 4.x and .NET Standard 2.0 profiles
+
+Once you've switched to the .NET 4.x equivalent scripting runtime, you can specify the **Api Compatibility Level** using the dropdown menu in the PlayerSettings (**Edit > Project Settings > Player**). There are two options:
+
+* **.NET Standard 2.0**. This matches the [.NET Standard 2.0 profile](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md) published by the .NET Foundation. Unity recommends .NET Standard 2.0 for new projects. It's smaller than .NET 4.x which is advantageous for size-constrained platforms. Additionally, Unity has committed to supporting this profile across all platforms Unity supports.
+
+* **.NET 4.x**. This profile provides access to the latest .NET 4 API. It includes all of the code available in the .NET Framework class libraries and supports .NET Standard 2.0 profiles as well. You should use this if your project requires part of the API not included in the .NET Standard 2.0 profile. However, some parts of this API may not be supported on all of Unity's platforms.
+
+You can read more in Unity's [blog post](https://blogs.unity3d.com/2018/03/28/updated-scripting-runtime-in-unity-2018-1-what-does-the-future-hold/).
 
 ## Feature highlights
 
@@ -76,20 +86,19 @@ public string PlayerHealthUiText => $"Player health: {Health}";
 
 ### Null-conditional operator
 
-The [`?.` null-conditional operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-conditional-operators) simplifies the syntax for checking for null values. With .NET 4.x, it takes less code to guard against missing component and null reference exceptions:
+The [`?.` null-conditional operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-conditional-operators) simplifies the syntax for checking for null values. With .NET 4.x, it takes less code to guard against null reference exceptions:
 
 ```csharp
 // .NET 3.5
-private void OnTriggerEnter(Collider other)
-{
-    if (other.attachedRigidbody != null)
-        other.attachedRigidbody.AddForce(Vector3.forward * 100);
-}
+    GameObject go = GameObject.Find("nope");
+    if (go != null)
+        go.SetActive(false);
 
 // .NET 4.x
 private void OnTriggerEnter(Collider other)
 {
-    other.attachedRigidbody?.AddForce(Vector3.forward * 100);
+     GameObject go = GameObject.Find("nope");
+     go?.SetActive(false);
 }
 ```
 
@@ -103,6 +112,9 @@ if (PlayerRespawned != null)
 // .NET 4.x
 PlayerRespawned?.Invoke();
 ```
+
+> [!NOTE]
+> Using the null-conditional operator on components or other fields of a MonoBehaviour may not always work as expected. For example, `GetComponent<AudioSource>()?.Play()` will give a missing component exception in the Unity editor if there is no AudioSource component attached to the game object. This is because null-conditional and null-coalescing operators check for null differently than the == operator in Unity, which you can read more about in a [blog post](https://blogs.unity3d.com/2014/05/16/custom-operator-should-we-keep-it/).
 
 ### Task-based Asynchronous Pattern (TAP)
 
@@ -156,3 +168,6 @@ TAP is a complex subject, with Unity-specific nuances developers should consider
 * Unity's coroutine feature is not available in classes that don't derive from MonoBehaviour. TAP is great for asynchronous programming in such classes.
 * At this point, Unity does not suggest TAP as a wholesale replacement of coroutines, and profiling is the only way to know the specific results of one approach versus the other for any given project.
 
+### Dynamic binding [TODO: this seems broken too!](https://forum.unity.com/threads/dynamic-requires-microsoft-csharp-dll-in-visual-studio.439226/) UPDATE: you have to add it from nuget...
+
+In C#, type is normally checked at compile-time. The `dynamic` keyword allows you to create constructs where type is not resolved or checked until runtime. This feature allows functionality similar to dynamically typed languages such as JavaScript, but opens the door for errors. In practice, it is commonly used to access dynamic form data.
