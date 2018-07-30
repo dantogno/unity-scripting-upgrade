@@ -6,25 +6,27 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class JSONTest : MonoBehaviour {
 
-	// Use this for initialization
-	//private async void Start ()
- //   {
- //       var pokemon = 
- //           JsonConvert.DeserializeObject<Pokemon>(await GetJsonFromURL("http://pokeapi.co/api/v2/pokemon/35/"));
+public class JSONTest : MonoBehaviour
+{
+    class Enemy
+    {
+        public string Name { get; set; }
+        public int AttackDamage { get; set; }
+        public int MaxHealth { get; set; }
+    }
+    private void Start()
+    {
+        string json = @"{
+        'Name': 'Ninja',
+        'AttackDamage': '40'
+        }";
 
- //       Debug.Log($"You got: {pokemon.Name}");
- //   }
+        var enemy = JsonConvert.DeserializeObject<Enemy>(json);
 
- //   private async Task<string> GetJsonFromURL(string url)
- //   {
- //       string result = await Activator.CreateInstance<HttpClient>()
- //           .GetStringAsync(url);
-
- //       Debug.Log($"JSON: {result}");
-
- //       return result;
- //   }
-	
+        Debug.Log($"{enemy.Name} deals {enemy.AttackDamage} damage.");
+        // Output: Ninja deals 40 damage.
+    }
 }
+
+

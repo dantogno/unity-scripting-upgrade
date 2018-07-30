@@ -35,10 +35,22 @@ public class TestScript : MonoBehaviour {
             other.attachedRigidbody.AddForce(Vector3.forward * 100);
     }
 
-    // Use this for initialization  
-    void Start ()
+    enum Difficulty { Easy, Medium, Hard };
+    private void TestNameOf()
+    {
+        Debug.Log(nameof(Difficulty.Easy));
+    }
+
+    private void RecordHighScore(string playerName)
+    {
+        if (playerName == null) throw new ArgumentNullException(nameof(playerName));
+    }
+
+// Use this for initialization  
+void Start ()
     {
 
+        ShowCallerInfo();
         dynamic d = 100;
 
         if (d is int)
@@ -91,9 +103,9 @@ public class TestScript : MonoBehaviour {
         Debug.Log(str.ExtensionMethod());
 
         // covariance & contravariance
-        Action<Base> b = (target) => { Debug.Log(target.GetType().Name + " covariance / contravariance worked"); };
-       // Action<Derived> d = b;
-       // d(new Derived());
+        Action<Base> baseAction = (target) => { Debug.Log(target.GetType().Name + " covariance / contravariance worked"); };
+        Action<Derived> derivedAction = baseAction;
+        derivedAction(new Derived());
         string x = null;
         string y = x ?? "null coalescing operator";
         Debug.Log(y + " working");
@@ -103,7 +115,6 @@ public class TestScript : MonoBehaviour {
         Debug.Log("Nullable type" + zz);
 
         TestParamsKeyword(1, 2, 3);
-        //ShowCallerInfo();
 
         Debug.Log($"Thread: {Thread.CurrentThread.ManagedThreadId}");
        // var _ = Task.Run(TaskDemoAsync);
@@ -205,14 +216,14 @@ public class TestScript : MonoBehaviour {
 
     //}
 
-    //public static void ShowCallerInfo([CallerMemberName]
-    //  string callerName = null, [CallerFilePath] string
-    //  callerFilePath = null, [CallerLineNumber] int callerLine = -1)
-    //{
-    //    Debug.Log("Caller Name: " + callerName);
-    //    Debug.Log("Caller FilePath: " + callerFilePath);
-    //    Debug.Log("Caller Line number: " + callerLine);
-    //}
+    public static void ShowCallerInfo([CallerMemberName]
+      string callerName = null, [CallerFilePath] string
+      callerFilePath = null, [CallerLineNumber] int callerLine = -1)
+    {
+        Debug.Log("Caller Name: " + callerName);
+        Debug.Log("Caller FilePath: " + callerFilePath);
+        Debug.Log("Caller Line number: " + callerLine);
+    }
 
 
 }
