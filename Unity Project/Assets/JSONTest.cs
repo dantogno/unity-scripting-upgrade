@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class JSONTest : MonoBehaviour
+public class JsonTest : MonoBehaviour
 {
     class Enemy
     {
