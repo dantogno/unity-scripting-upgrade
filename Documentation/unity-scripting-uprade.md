@@ -227,6 +227,7 @@ TAP is a complex subject, with Unity-specific nuances developers should consider
 * Only use the `async void` return type for functions that fire off async functions from traditional synchronous code. Such functions cannot themselves be awaited and should not have the "Async" suffix in their names.
 * Unity uses the UnitySynchronizationContext to ensure async functions run on the main thread by default. The Unity API is not accessible outside of the main thread.
 * It is possible to run tasks on background threads with methods like [`Task.Run`](https://msdn.microsoft.com/library/hh195051.aspx) and [`Task.ConfigureAwait(false)`](https://msdn.microsoft.com/library/system.threading.tasks.task.configureawait.aspx). This is useful for offloading expensive operations from the main thread to enhance performance, but can lead to difficult to debug problems, and the Unity API is not accessible.
+* Tasks that use threads are not supported on Unity WebGL builds.
 
 #### Differences between coroutines and TAP
 

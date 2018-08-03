@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class JsonTest : MonoBehaviour
 {
-    class Enemy
+    public class Enemy
     {
         public string Name { get; set; }
         public int AttackDamage { get; set; }
