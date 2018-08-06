@@ -189,32 +189,37 @@ In Unity, this is typically accomplished with [coroutines](https://docs.unity3d.
 
 ```csharp
 // Unity coroutine
-private void Start()
+public class UnityCoroutineExample : MonoBehaviour
 {
-    StartCoroutine(WaitOneSecond());
-    DoMoreStuff(); // This executes without waiting for WaitOneSecond
-}
-private IEnumerator WaitOneSecond()
-{
-    yield return new WaitForSeconds(1.0f);
-    Debug.Log("Finished waiting.");
+    private void Start()
+    {
+        StartCoroutine(WaitOneSecond());
+        DoMoreStuff(); // This executes without waiting for WaitOneSecond
+    }
+    private IEnumerator WaitOneSecond()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Debug.Log("Finished waiting.");
+    }
 }
 ```
 
 ```csharp
 // .NET 4.x async-await
 using System.Threading.Tasks;
-
-private async void Start()
+public class AsyncAwaitExample : MonoBehaviour
 {
-    Debug.Log("Wait.");
-    await WaitOneSecondAsync();
-    DoMoreStuff(); // Will not execute until WaitOneSecond has completed
-}
-private async Task WaitOneSecondAsync()
-{
-    await Task.Delay(TimeSpan.FromSeconds(1));
-    Debug.Log("Finished waiting.");
+    private async void Start()
+    {
+        Debug.Log("Wait.");
+        await WaitOneSecondAsync();
+        DoMoreStuff(); // Will not execute until WaitOneSecond has completed
+    }
+    private async Task WaitOneSecondAsync()
+    {
+        await Task.Delay(TimeSpan.FromSeconds(1));
+        Debug.Log("Finished waiting.");
+    }
 }
 ```
 
@@ -303,6 +308,35 @@ private void Start ()
 ```
 
 ### Using static
+
+[Using static](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/using-static) allows you to use static functions without typing the containing class name. This is nice if you need to use several static functions in the same class and want to save space and time by not typing the class name several times.
+
+```csharp
+// .NET 3.5
+public class Example : MonoBehaviour
+{
+    private void Start ()
+    {
+        Debug.Log(Mathf.RoundToInt(Mathf.PI));
+        // Output:
+        // 3
+    }
+}
+```
+
+```csharp
+// .NET 4.x
+using static UnityEngine.Mathf;
+public class UsingStaticExample: MonoBehaviour
+{
+    private void Start ()
+    {
+        Debug.Log(RoundToInt(PI));
+        // Output:
+        // 3
+    }
+}
+```
 
 ## Putting it all together
 

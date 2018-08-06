@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CallerInfoTest : MonoBehaviour
 {
-
 	private void Start ()
     {
         ShowCallerInfo("Something happened.");		

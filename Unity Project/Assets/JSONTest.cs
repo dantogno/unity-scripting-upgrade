@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using UnityEngine;
 
-
+/// <summary>
+/// You need to put Newtonsoft.Json.dll in your Assets/Plugins directory
+/// for this to work!
+/// Download it from NuGet: https://www.nuget.org/packages/Newtonsoft.Json
+/// </summary>
 public class JsonTest : MonoBehaviour
 {
     public class Enemy
@@ -21,9 +20,7 @@ public class JsonTest : MonoBehaviour
         'Name': 'Ninja',
         'AttackDamage': '40'
         }";
-
         var enemy = JsonConvert.DeserializeObject<Enemy>(json);
-
         Debug.Log($"{enemy.Name} deals {enemy.AttackDamage} damage.");
         // Output: Ninja deals 40 damage.
     }

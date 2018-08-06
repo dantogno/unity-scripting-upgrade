@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class AsyncVsCoroutine : MonoBehaviour {
+public class AsyncVsCoroutine : MonoBehaviour
+{
 
     private async void Start()
     {
