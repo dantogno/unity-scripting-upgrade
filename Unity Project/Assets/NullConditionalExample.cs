@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class NullConditionalTest : MonoBehaviour {
+public class NullConditionalExample : MonoBehaviour {
     private void Start ()
     {
         string s = null;

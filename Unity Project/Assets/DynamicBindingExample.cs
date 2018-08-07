@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DynamicTest : MonoBehaviour
+public class DynamicBindingExample : MonoBehaviour
 {
-
     private void Start()
     {
         dynamic d = 100;

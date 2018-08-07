@@ -189,6 +189,7 @@ In Unity, this is typically accomplished with [coroutines](https://docs.unity3d.
 
 ```csharp
 // Unity coroutine
+using UnityEngine;
 public class UnityCoroutineExample : MonoBehaviour
 {
     private void Start()
@@ -206,6 +207,7 @@ public class UnityCoroutineExample : MonoBehaviour
 
 ```csharp
 // .NET 4.x async-await
+using UnityEngine;
 using System.Threading.Tasks;
 public class AsyncAwaitExample : MonoBehaviour
 {
@@ -313,6 +315,7 @@ private void Start ()
 
 ```csharp
 // .NET 3.5
+using UnityEngine;
 public class Example : MonoBehaviour
 {
     private void Start ()
@@ -326,6 +329,7 @@ public class Example : MonoBehaviour
 
 ```csharp
 // .NET 4.x
+using UnityEngine;
 using static UnityEngine.Mathf;
 public class UsingStaticExample: MonoBehaviour
 {
@@ -338,8 +342,15 @@ public class UsingStaticExample: MonoBehaviour
 }
 ```
 
-## Putting it all together
+## .NET 4.x Sample Unity Project
+
+The sample contains examples of several .NET 4.x features.
 
 ## Additional resources
 
-## Next steps
+* [Unity Blog - Scripting Runtime Improvements in Unity 2018.2](https://blogs.unity3d.com/2018/07/11/scripting-runtime-improvements-in-unity-2018-2/)
+* [History of C#](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-version-history)
+* [What's New in C# 6](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6)
+* [Asynchronous programming in Unity, Using Coroutine and TAP](https://blogs.msdn.microsoft.com/appconsult/2017/09/01/unity-coroutine-tap)
+* [Async-Await Instead of Coroutines in Unity 2017](http://www.stevevermeulen.com/index.php/2017/09/using-async-await-in-unity3d-2017/)
+* [Unity Forum - Experimental Scripting Previews](https://forum.unity.com/forums/experimental-scripting-previews.107/)

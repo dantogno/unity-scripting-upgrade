@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CallerInfoTest : MonoBehaviour
+public class CallerInfoExample : MonoBehaviour
 {
 	private void Start ()
     {

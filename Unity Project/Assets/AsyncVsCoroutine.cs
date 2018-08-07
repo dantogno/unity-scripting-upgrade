@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class AsyncVsCoroutine : MonoBehaviour
 {
-
     private async void Start()
     {
         var waitTime = 5;

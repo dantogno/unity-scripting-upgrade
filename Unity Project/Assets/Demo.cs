@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json;
 #if UNITY_WEBGL
 using Newtonsoft.Json.Linq;
+using UnityEngine.Networking;
+using System.Collections;
 #else
 using System.Net.Http;
 using System.Threading.Tasks;
 #endif
 using System;
-using System.Collections;
 using System.Globalization;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 /// <summary>
@@ -40,7 +40,6 @@ public class Demo : MonoBehaviour
     [SerializeField]
     private ParticleSystem confetti;
     #endregion
-
     const string questionMarks = "???";
     #if UNITY_WEBGL
 #else
@@ -50,6 +49,7 @@ public class Demo : MonoBehaviour
     private void Awake()
     {
         HideErrorMessage();
+        ResetForm();
 #if UNITY_WEBGL
 #else
         client = new HttpClient();

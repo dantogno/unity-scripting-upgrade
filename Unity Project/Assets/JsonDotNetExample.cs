@@ -6,7 +6,7 @@ using UnityEngine;
 /// for this to work!
 /// Download it from NuGet: https://www.nuget.org/packages/Newtonsoft.Json
 /// </summary>
-public class JsonTest : MonoBehaviour
+public class JsonDotNetExample : MonoBehaviour
 {
     public class Enemy
     {

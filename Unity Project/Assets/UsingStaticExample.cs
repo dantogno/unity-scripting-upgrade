@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using static UnityEngine.Mathf;
+﻿using static UnityEngine.Mathf;
 using UnityEngine;
 
-public class UsingStaticTest : MonoBehaviour
+public class UsingStaticExample : MonoBehaviour
 {
 	private void Start ()
     {        
