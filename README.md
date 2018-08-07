@@ -1,6 +1,6 @@
 # unity-scripting-upgrade
 
-This an article and accompanying sample project demonstrating new features available with Unity's .NET 4.x scripting upgrade.
+This an [article](Documentation/unity-scripting-uprade.md) and accompanying sample project demonstrating new features available with Unity's .NET 4.x scripting upgrade.
 
 The sample uses the Pokeapi: https://www.pokeapi.co/ 
 
