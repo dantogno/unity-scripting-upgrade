@@ -1,11 +1,3 @@
----
-title: "Unity Scripting Upgrade"
-author: dantogno
-ms.author: v-davian
-ms.date: 07/06/2018
-ms.topic: sample
-ms.assetid:
----
 # Using .NET 4.x in Unity
 
 C# and .NET, the technologies underlying Unity scripting, have continued to receive updates since Microsoft originally released them in 2002. But Unity developers may not be aware of the steady stream of new features added to the C# language and .NET Framework. That's because prior to the release of Unity 2017.1, Unity has been using a .NET 3.5 equivalent scripting runtime, missing years of updates!
