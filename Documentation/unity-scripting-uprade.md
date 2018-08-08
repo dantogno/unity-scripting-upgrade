@@ -6,11 +6,11 @@ ms.date: 07/06/2018
 ms.topic: sample
 ms.assetid:
 ---
-# Unity Scripting Upgrade
+# Using .NET 4.x in Unity
 
 C# and .NET, the technologies underlying Unity scripting, have continued to receive updates since Microsoft originally released them in 2002. But Unity developers may not be aware of the steady stream of new features added to the C# language and .NET Framework. That's because prior to the release of Unity 2017.1, Unity has been using a .NET 3.5 equivalent scripting runtime, missing years of updates!
 
-With the release of Unity 2017.1, Unity introduced an experimental version of its scripting runtime upgraded to a .NET 4.6, C# 6 compatible version. In Unity 2018.1, the .NET 4.x equivalent runtime is no longer considered "experimental" and has been rebranded as "stable," while the older .NET 3.5 equivalent runtime is now considered "legacy." And with the release of Unity 2018.3, Unity is projecting to make the upgraded scripting runtime the default selection, and update even further to C# 7. For more information and the latest updates on this roadmap, you can visit Unity's [Experimental Scripting Previews forum](https://forum.unity.com/forums/experimental-scripting-previews.107/). In the meantime, check out the sections below to learn more about these new features and how to use them.
+With the release of Unity 2017.1, Unity introduced an experimental version of its scripting runtime upgraded to a .NET 4.6, C# 6 compatible version. In Unity 2018.1, the .NET 4.x equivalent runtime is no longer considered "experimental," while the older .NET 3.5 equivalent runtime is now considered "legacy." And with the release of Unity 2018.3, Unity is projecting to make the upgraded scripting runtime the default selection, and update even further to C# 7. For more information and the latest updates on this roadmap, you read Unity's [blog post](https://blogs.unity3d.com/2018/07/11/scripting-runtime-improvements-in-unity-2018-2/) or visit their [Experimental Scripting Previews forum](https://forum.unity.com/forums/experimental-scripting-previews.107/). In the meantime, check out the sections below to learn more about the new features available now with the .NET 4.x scripting runtime.
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ Once you've switched to the .NET 4.x equivalent scripting runtime, you can speci
 
 * **.NET 4.x**. This profile provides access to the latest .NET 4 API. It includes all of the code available in the .NET Framework class libraries and supports .NET Standard 2.0 profiles as well. You should use this if your project requires part of the API not included in the .NET Standard 2.0 profile. However, some parts of this API may not be supported on all of Unity's platforms.
 
-You can read more in Unity's [blog post](https://blogs.unity3d.com/2018/03/28/updated-scripting-runtime-in-unity-2018-1-what-does-the-future-hold/).
+You can read more about these options in Unity's [blog post](https://blogs.unity3d.com/2018/03/28/updated-scripting-runtime-in-unity-2018-1-what-does-the-future-hold/).
 
 ### Adding assembly references when using the .NET 4.x Api Compatibility Level
 
@@ -41,7 +41,7 @@ When using the .NET Standard 2.0 setting in the **Api Compatibility Level** drop
 
 ![MonoBleedingEdge directory](media/vstu_monobleedingedge.png)
 
-For example, if you are using the .NET 4.x profile and want to use `HttpClient`, you must add an assembly reference for System.Net.Http.dll. The compiler will complain that you are missing an assembly reference.
+For example, if you are using the .NET 4.x profile and want to use `HttpClient`, you must add an assembly reference for System.Net.Http.dll, or the compiler will complain that you are missing an assembly reference.
 
 ![missing assembly reference](media/vstu_missing-reference.png)
 
@@ -55,13 +55,13 @@ Because Visual Studio regenerates .csproj and .sln files for Unity projects each
 
 ## Taking advantage of .NET compatibility
 
-With the .NET 4.x equivalent scripting runtime enabled, Unity users not only gain access to a wealth of new C# syntax and language features, but now have access to the huge variety of .NET 4.X and .NET Standard 2.0 packages that are incompatible with the older .NET 3.5 scripting runtime.
+With the .NET 4.x equivalent scripting runtime enabled, Unity users not only gain access to a wealth of new C# syntax and language features, but now have access to the huge variety of .NET 4.x and .NET Standard 2.0 packages that are incompatible with the legacy .NET 3.5 Unity scripting runtime.
 
 ### Add packages from NuGet to a Unity project
 
 [NuGet](https://www.nuget.org/) is the package manager for .NET. NuGet is integrated into Visual Studio; however, because Unity regenerates Visual Studio project files upon reopening a Unity project, a special process must be used to add NuGet packages. To add a package from NuGet to your Unity project:
 
-1. Browse NuGet to locate a compatible package you'd like to add (.NET Standard 2.0 or .NET 4.x). This example will use [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/), a popular package for working with JSON.
+1. Browse NuGet to locate a compatible package you'd like to add (.NET Standard 2.0 or .NET 4.x). This example will demonstrate adding [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/), a popular package for working with JSON, to a .NET Standard 2.0 project.
 
 1. Click the **Download** button.
 
@@ -104,6 +104,8 @@ public class JSONTest : MonoBehaviour
 ```
 
 ## New syntax and language features
+
+Using the updated scripting runtime gives Unity developers access to C# 6 and a host of new language features and syntax.
 
 ### Auto-property initializers
 
