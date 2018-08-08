@@ -277,10 +277,15 @@ enum Difficulty {Easy, Medium, Hard};
 private void Start()
 {
     Debug.Log(nameof(Difficulty.Easy));
+    RecordHighScore("John");
+    // Output:
+    // Easy
+    // playerName
 }
 // Validate parameter:
 private void RecordHighScore(string playerName)
 {
+    Debug.Log(nameof(playerName));
     if (playerName == null) throw new ArgumentNullException(nameof(playerName));
 }
 ```
@@ -346,7 +351,7 @@ public class UsingStaticExample: MonoBehaviour
 
 ## .NET 4.x Sample Unity Project
 
-The sample contains examples of several .NET 4.x features.
+The sample contains examples of several .NET 4.x features. You can download the project or view the source code on [GitHub](https://github.com/dantogno/unity-scripting-upgrade).
 
 ## Additional resources
 
