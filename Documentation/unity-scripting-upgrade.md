@@ -1,6 +1,6 @@
 # Using .NET 4.x in Unity
 
-C# and .NET, the technologies underlying Unity scripting, have continued to receive updates since Microsoft originally released them in 2002. But Unity developers may not be aware of the steady stream of new features added to the C# language and .NET Framework. That's because prior to the release of Unity 2017.1, Unity has been using a .NET 3.5 equivalent scripting runtime, missing years of updates!
+C# and .NET, the technologies underlying Unity scripting, have continued to receive updates since Microsoft originally released them in 2002. But Unity developers may not be aware of the steady stream of new features added to the C# language and .NET Framework. That's because before Unity 2017.1, Unity has been using a .NET 3.5 equivalent scripting runtime, missing years of updates!
 
 With the release of Unity 2017.1, Unity introduced an experimental version of its scripting runtime upgraded to a .NET 4.6, C# 6 compatible version. In Unity 2018.1, the .NET 4.x equivalent runtime is no longer considered "experimental," while the older .NET 3.5 equivalent runtime is now considered "legacy." And with the release of Unity 2018.3, Unity is projecting to make the upgraded scripting runtime the default selection, and update even further to C# 7. For more information and the latest updates on this roadmap, you read Unity's [blog post](https://blogs.unity3d.com/2018/07/11/scripting-runtime-improvements-in-unity-2018-2/) or visit their [Experimental Scripting Previews forum](https://forum.unity.com/forums/experimental-scripting-previews.107/). In the meantime, check out the sections below to learn more about the new features available now with the .NET 4.x scripting runtime.
 
@@ -21,25 +21,25 @@ With the release of Unity 2017.1, Unity introduced an experimental version of it
 
 Once you've switched to the .NET 4.x equivalent scripting runtime, you can specify the **Api Compatibility Level** using the dropdown menu in the PlayerSettings (**Edit > Project Settings > Player**). There are two options:
 
-* **.NET Standard 2.0**. This matches the [.NET Standard 2.0 profile](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md) published by the .NET Foundation. Unity recommends .NET Standard 2.0 for new projects. It's smaller than .NET 4.x which is advantageous for size-constrained platforms. Additionally, Unity has committed to supporting this profile across all platforms Unity supports.
+* **.NET Standard 2.0**. This profile matches the [.NET Standard 2.0 profile](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md) published by the .NET Foundation. Unity recommends .NET Standard 2.0 for new projects. It's smaller than .NET 4.x, which is advantageous for size-constrained platforms. Additionally, Unity has committed to supporting this profile across all platforms Unity supports.
 
-* **.NET 4.x**. This profile provides access to the latest .NET 4 API. It includes all of the code available in the .NET Framework class libraries and supports .NET Standard 2.0 profiles as well. You should use this if your project requires part of the API not included in the .NET Standard 2.0 profile. However, some parts of this API may not be supported on all of Unity's platforms.
+* **.NET 4.x**. This profile provides access to the latest .NET 4 API. It includes all of the code available in the .NET Framework class libraries and supports .NET Standard 2.0 profiles as well. Use the .NET 4.x profile if your project requires part of the API not included in the .NET Standard 2.0 profile. However, some parts of this API may not be supported on all of Unity's platforms.
 
 You can read more about these options in Unity's [blog post](https://blogs.unity3d.com/2018/03/28/updated-scripting-runtime-in-unity-2018-1-what-does-the-future-hold/).
 
 ### Adding assembly references when using the .NET 4.x Api Compatibility Level
 
-When using the .NET Standard 2.0 setting in the **Api Compatibility Level** dropdown, all assemblies in the API profile are referenced and usable. However, when using the larger .NET 4.x profile, some of the assemblies that Unity ships with are not referenced by default. To use these APIs, you must manually add an assembly reference. You can view the assemblies Unity ships with inside the **MonoBleedingEdge/lib/mono** directory of your Unity editor installation.
+When using the .NET Standard 2.0 setting in the **Api Compatibility Level** dropdown, all assemblies in the API profile are referenced and usable. However, when using the larger .NET 4.x profile, some of the assemblies that Unity ships with aren't referenced by default. To use these APIs, you must manually add an assembly reference. You can view the assemblies Unity ships with in the **MonoBleedingEdge/lib/mono** directory of your Unity editor installation.
 
 ![MonoBleedingEdge directory](media/vstu_monobleedingedge.png)
 
-For example, if you are using the .NET 4.x profile and want to use `HttpClient`, you must add an assembly reference for System.Net.Http.dll, or the compiler will complain that you are missing an assembly reference.
+For example, if you're using the .NET 4.x profile and want to use `HttpClient`, you must add an assembly reference for System.Net.Http.dll. Without it, the compiler will complain that you're missing an assembly reference.
 
 ![missing assembly reference](media/vstu_missing-reference.png)
 
-Because Visual Studio regenerates .csproj and .sln files for Unity projects each time they are opened, you cannot add assembly references directly in Visual Studio or they will be lost upon reopening the project. Instead, a special text file named **mcs.rsp** must be used:
+Visual Studio regenerates .csproj and .sln files for Unity projects each time they're opened. As a result, you cannot add assembly references directly in Visual Studio because they'll be lost upon reopening the project. Instead, a special text file named **mcs.rsp** must be used:
 
-1. Create a new text file named **mcs.rsp** inside your Unity project's root **Assets** directory.
+1. Create a new text file named **mcs.rsp** in your Unity project's root **Assets** directory.
 
 1. On the first line in the empty text file, enter: `-r:System.Net.Http.dll` and then save the file. You can replace "System.Net.Http.dll" with any included assembly that might be missing a reference.
 
@@ -47,11 +47,11 @@ Because Visual Studio regenerates .csproj and .sln files for Unity projects each
 
 ## Taking advantage of .NET compatibility
 
-With the .NET 4.x equivalent scripting runtime enabled, Unity users not only gain access to a wealth of new C# syntax and language features, but now have access to the huge variety of .NET 4.x and .NET Standard 2.0 packages that are incompatible with the legacy .NET 3.5 Unity scripting runtime.
+In addition to new C# syntax and language features, the .NET 4.x scripting runtime gives Unity users access to a huge library of .NET packages that are incompatible with the legacy .NET 3.5 scripting runtime.
 
 ### Add packages from NuGet to a Unity project
 
-[NuGet](https://www.nuget.org/) is the package manager for .NET. NuGet is integrated into Visual Studio; however, because Unity regenerates Visual Studio project files upon reopening a Unity project, a special process must be used to add NuGet packages. To add a package from NuGet to your Unity project:
+[NuGet](https://www.nuget.org/) is the package manager for .NET. NuGet is integrated into Visual Studio. However, Unity projects require a special process to add NuGet packages. This is because when you open a project in Unity, its Visual Studio project files are regenerated, undoing necessary configurations. To add a package from NuGet to your Unity project:
 
 1. Browse NuGet to locate a compatible package you'd like to add (.NET Standard 2.0 or .NET 4.x). This example will demonstrate adding [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/), a popular package for working with JSON, to a .NET Standard 2.0 project.
 
@@ -63,9 +63,9 @@ With the .NET 4.x equivalent scripting runtime enabled, Unity users not only gai
 
 1. Within the zip file, navigate to the **lib/netstandard2.0** directory and copy the **Newtonsoft.Json.dll** file.
 
-1. Inside your Unity project's root **Assets** folder, create a new folder named **Plugins**. This is a special folder name in Unity. See the [Unity documentation](https://docs.unity3d.com/Manual/Plugins.html) for more information.
+1. In your Unity project's root **Assets** folder, create a new folder named **Plugins**. Plugins is a special folder name in Unity. See the [Unity documentation](https://docs.unity3d.com/Manual/Plugins.html) for more information.
 
-1. Paste the **Newtonsoft.Json.dll** file into the your Unity project's **Plugins** directory. You can now use code in the Json.NET package.
+1. Paste the **Newtonsoft.Json.dll** file into your Unity project's **Plugins** directory. You can now use code in the Json.NET package.
 
 ```csharp
 using Newtonsoft.Json;
@@ -113,7 +113,7 @@ public int Health { get; set; } = 100;
 
 ### String interpolation
 
-With the older .NET 3.5 runtime, string concatenation required awkward syntax. Now with the .NET 4.x runtime, the [`$` string interpolation](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated) feature allows expressions to be inserted into strings in a more direct and readable syntax:
+With the older .NET 3.5 runtime, string concatenation required awkward syntax. Now with the .NET 4.x runtime, the [`$` string interpolation](https://docs.microsoft.com/dotnet/csharp/language-reference/tokens/interpolated) feature allows expressions to be inserted into strings in a more direct and readable syntax:
 
 ```csharp
 // .NET 3.5
@@ -126,7 +126,7 @@ Debug.Log($"Player health: {Health}");
 
 ### Expression-bodied members
 
-With the newer C# syntax available in the .NET 4.x runtime, [lambda expressions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions) can replace the body of functions to make them more succinct:
+With the newer C# syntax available in the .NET 4.x runtime, [lambda expressions](https://docs.microsoft.com/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions) can replace the body of functions to make them more succinct:
 
 ```csharp
 // .NET 3.5
@@ -148,7 +148,7 @@ public string PlayerHealthUiText => $"Player health: {Health}";
 
 ### Null-conditional operator
 
-The [`?.` null-conditional operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-conditional-operators) simplifies the syntax for checking for null values. With .NET 4.x, it takes less code to guard against null reference exceptions:
+The [`?.` null-conditional operator](https://docs.microsoft.com/dotnet/csharp/language-reference/operators/null-conditional-operators) simplifies the syntax for checking for null values. With .NET 4.x, it takes less code to guard against null reference exceptions:
 
 ```csharp
 // .NET 3.5
@@ -161,7 +161,7 @@ The [`?.` null-conditional operator](https://docs.microsoft.com/en-us/dotnet/csh
      go?.SetActive(false);
 ```
 
-This works well with the C# [events](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/) feature:
+The null-conditional operator works well with the C# [events](https://docs.microsoft.com/dotnet/csharp/programming-guide/events/) feature:
 
 ```csharp
 // .NET 3.5
@@ -177,9 +177,9 @@ PlayerRespawned?.Invoke();
 
 ### Task-based Asynchronous Pattern (TAP)
 
-[Asynchronous programming](https://docs.microsoft.com/en-us/dotnet/csharp/async) allows time consuming operations to take place without causing your application to become unresponsive. This functionality also allows your code to wait for time consuming operations to finish before continuing with subsequent code that should not execute until the time consuming operation has finished. For example, you could wait for a file to load or a network operation to complete.
+[Asynchronous programming](https://docs.microsoft.com/dotnet/csharp/async) allows time consuming operations to take place without causing your application to become unresponsive. This functionality also allows your code to wait for time consuming operations to finish before continuing with code that depends on the results of these operations. For example, you could wait for a file to load or a network operation to complete.
 
-In Unity, this is typically accomplished with [coroutines](https://docs.unity3d.com/Manual/Coroutines.html). However, since C# 5, the preferred method of asynchronous programming in .NET development has been the [Task-based Asynchronous Pattern (TAP)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) using the `async` and `await` keywords with [System.Threading.Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task). In summary, in an `async` function you can `await` a task, waiting to continue work until the task has completed without blocking the rest of your application from updating.
+In Unity, asynchronous programming is typically accomplished with [coroutines](https://docs.unity3d.com/Manual/Coroutines.html). However, since C# 5, the preferred method of asynchronous programming in .NET development has been the [Task-based Asynchronous Pattern (TAP)](https://docs.microsoft.com/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) using the `async` and `await` keywords with [System.Threading.Task](https://docs.microsoft.com/dotnet/api/system.threading.tasks.task). In summary, in an `async` function you can `await` a task's completion without blocking the rest of your application from updating.
 
 ```csharp
 // Unity coroutine
@@ -219,30 +219,31 @@ public class AsyncAwaitExample : MonoBehaviour
 }
 ```
 
-TAP is a complex subject, with Unity-specific nuances developers should consider. As a result, TAP is not a universal replacement for coroutines in Unity; however, it is another tool to leverage. The scope of this feature is beyond this article, but some general best practices and tips are provided below:
+TAP is a complex subject, with Unity-specific nuances developers should consider. As a result, TAP isn't a universal replacement for coroutines in Unity; however, it is another tool to leverage. The scope of this feature is beyond this article, but some general best practices and tips are provided below:
 
 #### Getting started reference for TAP with Unity
 
-* Asynchronous functions intended to be awaited should have the return type [`Task`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) or [`Task<TResult>`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1).
-* Asynchronous functions that return a task should have the suffix **"Async"** appended to their names. This helps indicate that they should always be awaited.
-* Only use the `async void` return type for functions that fire off async functions from traditional synchronous code. Such functions cannot themselves be awaited and should not have the "Async" suffix in their names.
-* Unity uses the UnitySynchronizationContext to ensure async functions run on the main thread by default. The Unity API is not accessible outside of the main thread.
-* It is possible to run tasks on background threads with methods like [`Task.Run`](https://msdn.microsoft.com/library/hh195051.aspx) and [`Task.ConfigureAwait(false)`](https://msdn.microsoft.com/library/system.threading.tasks.task.configureawait.aspx). This is useful for offloading expensive operations from the main thread to enhance performance, but can lead to difficult to debug problems, and the Unity API is not accessible.
-* Tasks that use threads are not supported on Unity WebGL builds.
+* Asynchronous functions intended to be awaited should have the return type [`Task`](https://docs.microsoft.com/dotnet/api/system.threading.tasks.task) or [`Task<TResult>`](https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1).
+* Asynchronous functions that return a task should have the suffix **"Async"** appended to their names. The "Async" suffix helps indicate that a function should always be awaited.
+* Only use the `async void` return type for functions that fire off async functions from traditional synchronous code. Such functions cannot themselves be awaited and shouldn't have the "Async" suffix in their names.
+* Unity uses the UnitySynchronizationContext to ensure async functions run on the main thread by default. The Unity API isn't accessible outside of the main thread.
+* It's possible to run tasks on background threads with methods like [`Task.Run`](https://msdn.microsoft.com/library/hh195051.aspx) and [`Task.ConfigureAwait(false)`](https://msdn.microsoft.com/library/system.threading.tasks.task.configureawait.aspx). This technique is useful for offloading expensive operations from the main thread to enhance performance. However, using background threads can lead to difficult to debug problems, such as [race conditions](https://wikipedia.org/wiki/Race_condition).
+* The Unity API isn't accessible outside the main thread.
+* Tasks that use threads aren't supported on Unity WebGL builds.
 
 #### Differences between coroutines and TAP
 
 * Coroutines cannot return values, but `Task<TResult>` can.
-* You cannot put a `yield` inside of a try-catch statement, making error handling difficult with coroutines. However, try-catch works with TAP.
-* Unity's coroutine feature is not available in classes that don't derive from MonoBehaviour. TAP is great for asynchronous programming in such classes.
-* At this point, Unity does not suggest TAP as a wholesale replacement of coroutines, and profiling is the only way to know the specific results of one approach versus the other for any given project.
+* You cannot put a `yield` in of a try-catch statement, making error handling difficult with coroutines. However, try-catch works with TAP.
+* Unity's coroutine feature isn't available in classes that don't derive from MonoBehaviour. TAP is great for asynchronous programming in such classes.
+* At this point, Unity doesn't suggest TAP as a wholesale replacement of coroutines. Profiling is the only way to know the specific results of one approach versus the other for any given project.
 
 > [!NOTE]
-> As of Unity 2018.2, debugging async methods with break points is not fully supported; however, [this functionality is expected in Unity 2018.3](https://twitter.com/jbevain/status/900043560665235456).
+> As of Unity 2018.2, debugging async methods with break points isn't fully supported; however, [this functionality is expected in Unity 2018.3](https://twitter.com/jbevain/status/900043560665235456).
 
 ### Dynamic binding
 
-In C#, type is normally checked at compile-time. The `dynamic` keyword allows you to create constructs where type is not resolved or checked until runtime. This feature allows functionality similar to dynamically typed languages such as JavaScript, but opens the door for errors. In practice, it is commonly used to access dynamic form data.
+In C#, type is normally checked at compile time. The `dynamic` keyword allows you to create constructs where type isn't resolved or checked until runtime. This feature allows functionality similar to dynamically typed languages such as JavaScript, but opens the door for errors. In practice, it's commonly used to access dynamic form data.
 
 ```csharp
     private void Start()
@@ -257,11 +258,11 @@ In C#, type is normally checked at compile-time. The `dynamic` keyword allows yo
 ```
 
 > [!NOTE]
-> When using the .NET Standard 2.0 API compatibility level, the [Microsoft.CSharp package](https://www.nuget.org/packages/Microsoft.CSharp/) must be added from NuGet for this functionality. This is not necessary when using the .NET 4.x API compatibility level.
+> When using the .NET Standard 2.0 API compatibility level, the [Microsoft.CSharp package](https://www.nuget.org/packages/Microsoft.CSharp/) must be added from NuGet for this functionality. This isn't necessary when using the .NET 4.x API compatibility level.
 
 ### nameof operator
 
-The `nameof` operator obtains the string name of a variable, type or member. Some cases where `nameof` comes in handy are logging errors, and getting the string name of an enum:
+The `nameof` operator gets the string name of a variable, type or member. Some cases where `nameof` comes in handy are logging errors, and getting the string name of an enum:
 
 ```csharp
 // Get the string name of an enum:
@@ -284,7 +285,7 @@ private void RecordHighScore(string playerName)
 
 ### Caller info attributes
 
-[Caller info attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/caller-information) provide information about the caller of a method. Note that you must provide a default value for each parameter you want to use with a Caller Info attribute.
+[Caller info attributes](https://docs.microsoft.com/dotnet/csharp/programming-guide/concepts/caller-information) provide information about the caller of a method. You must provide a default value for each parameter you want to use with a Caller Info attribute.
 
 ```csharp
 private void Start ()
@@ -310,7 +311,7 @@ private void Start ()
 
 ### Using static
 
-[Using static](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/using-static) allows you to use static functions without typing the containing class name. This is nice if you need to use several static functions in the same class and want to save space and time by not typing the class name several times.
+[Using static](https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/using-static) allows you to use static functions without typing its class name. With using static, you can save space and time if you need to use several static functions from the same class.
 
 ```csharp
 // .NET 3.5
@@ -348,8 +349,8 @@ The sample contains examples of several .NET 4.x features. You can download the 
 ## Additional resources
 
 * [Unity Blog - Scripting Runtime Improvements in Unity 2018.2](https://blogs.unity3d.com/2018/07/11/scripting-runtime-improvements-in-unity-2018-2/)
-* [History of C#](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-version-history)
-* [What's New in C# 6](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-6)
+* [History of C#](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-version-history)
+* [What's New in C# 6](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-6)
 * [Asynchronous programming in Unity, Using Coroutine and TAP](https://blogs.msdn.microsoft.com/appconsult/2017/09/01/unity-coroutine-tap)
 * [Async-Await Instead of Coroutines in Unity 2017](http://www.stevevermeulen.com/index.php/2017/09/using-async-await-in-unity3d-2017/)
 * [Unity Forum - Experimental Scripting Previews](https://forum.unity.com/forums/experimental-scripting-previews.107/)
