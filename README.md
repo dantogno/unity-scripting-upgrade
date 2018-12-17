@@ -2,6 +2,8 @@
 
 This an [article](Documentation/unity-scripting-uprade.md) and accompanying sample project demonstrating new features available with Unity's .NET 4.x scripting upgrade.
 
+You can try a web build of the sample project here: https://nightcity.itch.io/whos-that 
+
 The sample uses the Pokeapi: https://www.pokeapi.co/ 
 
 ### Audio credits
