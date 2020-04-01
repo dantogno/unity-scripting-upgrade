@@ -1,6 +1,6 @@
 # unity-scripting-upgrade
 
-This an [article](https://docs.microsoft.com/en-us/visualstudio/cross-platform/unity-scripting-upgrade) and accompanying sample project demonstrating new features available with Unity's .NET 4.x scripting upgrade.
+This [article](https://docs.microsoft.com/en-us/visualstudio/cross-platform/unity-scripting-upgrade) and accompanying sample project demonstrating new features available with Unity's .NET 4.x scripting upgrade.
 
 You can try a web build of the sample project here: https://nightcity.itch.io/whos-that 
 
